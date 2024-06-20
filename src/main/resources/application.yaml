@@ -1,1 +1,6 @@
-spring.application.name=fagprove-elev-status
+fint:
+  kafka:
+    application-id: fagprove-elev-status
+    topic:
+      org-id: fintlabs-no
+      domain-context: fagprove
