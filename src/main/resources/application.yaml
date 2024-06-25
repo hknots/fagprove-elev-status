@@ -1,6 +1,20 @@
 fint:
   kafka:
     application-id: fagprove-elev-status
+    enable-ssl: true
     topic:
-      org-id: fintlabs-no
+      org-id: fintlabs.no
       domain-context: fagprove
+
+spring:
+  kafka:
+    consumer:
+      group-id: fagprove-elev-status
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://idp.felleskomponent.no/nidp/oauth/nam
+  mvc:
+    servlet:
+      path: /api/status

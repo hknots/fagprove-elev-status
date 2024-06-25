@@ -1,0 +1,39 @@
+apiVersion: fintlabs.no/v1alpha1
+kind: Application
+metadata:
+  name: fagprove-elev-status
+  namespace: fintlabs-no
+  labels:
+    app.kubernetes.io/name: fagprove-elev-status
+    app.kubernetes.io/instance: fagprove-elev-status_fintlabs_no
+    app.kubernetes.io/version: latest
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: fint-core
+    fintlabs.no/team: core
+    fintlabs.no/org-id: fintlabs.no
+spec:
+  port: 8080
+  orgId: fintlabs.no
+  image: ghcr.io/fintlabs/fagprove-elev-status:latest
+  url:
+    hostname: fagprove.fintlabs.no
+  kafka:
+    enabled: true
+    acls:
+      - topic: 'fintlabs-no.fagprove.*'
+        permission: read
+  ingress:
+    enabled: true
+    basePath: /api/status
+    middlewares:
+      - fagprove-sso
+  env:
+    - name: JAVA_TOOL_OPTIONS
+      value: '-XX:+ExitOnOutOfMemoryError -Xmx525M'
+  resources:
+    limits:
+      memory: "1Gi"
+      cpu: "500m"
+    requests:
+      memory: "500Mi"
+      cpu: "100m"
